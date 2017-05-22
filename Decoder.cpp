@@ -32,10 +32,13 @@ void Decoder::decodeFile(std::string fileName){
 			// for normal case of reading 2 codes in 3 bytes
 			inFile.read(buffer,3);
 
+			//one time setup of prevCode before loop starts
 			std::bitset<12> bits = to12Bit(buffer[0], buffer[1], true);
 			prevCode = bit12ToInt(bits);
-			//std::cout << dict.lookup(prevCode);
 			outFile << dict.lookup(prevCode);
+			//std::cout << dict.lookup(prevCode);
+
+			// Second code processed from rightmost 12 bits
 			std::bitset<12> bits2 = to12Bit(buffer[1], buffer[2], false);
 			currCode = bit12ToInt(bits2);
 			lzw.decode(prevCode, currCode, dict, outFile);
@@ -48,8 +51,8 @@ void Decoder::decodeFile(std::string fileName){
 
 			std::bitset<16> bits = to16Bit(buffer16[0], buffer16[1]);
 			prevCode = bit16ToInt(bits);
-			//std::cout << dict.lookup(prevCode);
 			outFile << dict.lookup(prevCode);
+			//std::cout << dict.lookup(prevCode);
 
 			totalBytes = totalBytes-2;
 		}
@@ -89,8 +92,8 @@ void Decoder::decodeFile(std::string fileName){
 
 				std::bitset<16> bits = to16Bit(buffer16[0], buffer16[1]);
 				prevCode = bit16ToInt(bits);
-				//std::cout << dict.lookup(prevCode);
 				outFile << dict.lookup(prevCode);
+				//std::cout << dict.lookup(prevCode);
 
 				totalBytes = totalBytes-2;
 			}

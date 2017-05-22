@@ -19,8 +19,8 @@ void LZW::decode(int &prevCode, int currCode, Dictionary &dict, std::ofstream &o
 		char ch = dict.lookup(prevCode).at(0);
 		std::string forDict = ((dict.lookup(prevCode))+ch);
 		dict.addEntry(forDict, dict.getNextCode());
-		//std::cout << forDict;
 		outFile << forDict;
+		//std::cout << forDict;
 	}
 	prevCode = currCode;
 
